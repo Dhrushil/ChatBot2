@@ -1,16 +1,23 @@
 #!/bin/bash
 
-# Ensure necessary tools are available
-apt-get update && apt-get install -y unzip curl
+set -e  # Exit on any error
 
-# Download the ZIP of Rhubarb + res folder
-curl -L -o rhubarb.zip "https://github.com/DanielSWolf/rhubarb-lip-sync/releases/download/v1.10.0/rhubarb-linux.zip"
+ZIP_URL="https://github.com/DanielSWolf/rhubarb-lip-sync/releases/download/v1.14.0/Rhubarb-Lip-Sync-1.14.0-Linux.zip"
 
-# Unzip it into the current working directory
-unzip rhubarb.zip
+echo "📦 Downloading Rhubarb..."
+curl -L -o rhubarb.zip "$ZIP_URL"
 
-# Optional: make Rhubarb executable
+echo "📂 Extracting..."
+mkdir -p bin
+unzip -q rhubarb.zip -d temp_rhubarb
+
+# Move contents *inside* the extracted top folder to ./bin
+mv temp_rhubarb/*/* bin/
+
+# Make binary executable
 chmod +x bin/rhubarb
 
-# Continue with the rest of your build
-echo "Rhubarb and resources downloaded."
+# Clean up
+rm -rf rhubarb.zip temp_rhubarb
+
+echo "✅ Rhubarb installed in ./bin"
