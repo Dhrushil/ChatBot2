@@ -12,7 +12,7 @@ const app = express();
 app.use(express.json());
 app.use(
   cors({
-    origin: "https://architecturebot-ccvg.onrender.com/",
+    origin: "https://architecturebot-ccvg.onrender.com",
     methods: ["GET", "POST", "OPTIONS"],
     allowedHeaders: ["Content-Type"],
   })
