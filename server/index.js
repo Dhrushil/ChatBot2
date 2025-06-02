@@ -6,7 +6,6 @@ import { promises as fs } from "fs";
 import { exec } from "child_process";
 import OpenAI from "openai";
 import path from "path";
-import fs from "fs";
 
 dotenv.config();
 
@@ -189,16 +188,6 @@ app.get("/rhubarb-test", async (req, res) => {
     res.send("✅ Rhubarb works on this server.");
   } catch (err) {
     res.status(500).send("❌ Rhubarb failed: " + err.message);
-  }
-});
-
-app.get("/debug-bin", async (req, res) => {
-  try {
-    const binPath = path.resolve("bin");
-    const files = await fs.promises.readdir(binPath);
-    res.send(`📁 bin folder exists! Contents:\n${files.join("\n")}`);
-  } catch (err) {
-    res.status(500).send(`❌ Could not access 'bin':\n${err.message}`);
   }
 });
 
