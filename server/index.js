@@ -5,6 +5,7 @@ import axios from "axios";
 import { promises as fs } from "fs";
 import { exec } from "child_process";
 import OpenAI from "openai";
+import path from "path";
 
 dotenv.config();
 
@@ -74,7 +75,11 @@ const lipSyncMessage = async (index) => {
   await execCommand(`ffmpeg -y -i ${mp3} ${wav}`);
 
   console.log(`🗣️ Generating lipsync for ${wav}`);
-  await execCommand(`./bin/rhubarb -f json -o ${json} ${wav} -r phonetic`);
+  
+
+  const rhubarbPath = path.resolve("bin/rhubarb");
+
+  await execCommand(`${rhubarbPath} -f json -o audios/message_${index}.json audios/message_${index}.wav -r phonetic`);
   console.log(`✅ Lipsync file created: ${json}`);
 };
 
@@ -175,6 +180,15 @@ Respond only with JSON. Example:
 
 app.get("/", (req, res) => {
   res.send("Architecture Bot backend is live.");
+});
+
+app.get("/rhubarb-test", async (req, res) => {
+  try {
+    await execCommand(`./bin/rhubarb --version`);
+    res.send("✅ Rhubarb works on this server.");
+  } catch (err) {
+    res.status(500).send("❌ Rhubarb failed: " + err.message);
+  }
 });
 
 app.listen(port, () => {
