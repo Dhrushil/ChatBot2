@@ -10,7 +10,7 @@ unzip rhubarb.zip -d bin
 
 mv bin/rhubarb* bin/rhubarb
 
-chmod +x bin/rhubarb
+chmod 755 bin/rhubarb
 
 rm rhubarb.zip
 
