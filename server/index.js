@@ -173,6 +173,11 @@ Respond only with JSON. Example:
   }
 });
 
+app.get("/", (req, res) => {
+  res.send("Architecture Bot backend is live.");
+});
+
 app.listen(port, () => {
   console.log(`🏛️ Architecture Bot running on http://localhost:${port}`);
 });
+
